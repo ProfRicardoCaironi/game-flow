@@ -1,0 +1,47 @@
+.vortex-footer {
+  margin-top: auto; /* Garante que o footer seja empurrado para baixo */
+  padding: 20px 40px;
+  background-color: #020617;
+  border-top: 1px solid #1e293b;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left strong {
+  color: #7c3aed;
+}
+
+.heart-icon {
+  color: #ef4444;
+  display: inline;
+  vertical-align: middle;
+}
+
+.footer-right {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-right a {
+  color: #94a3b8;
+  transition: 0.3s;
+}
+
+.footer-right a:hover {
+  color: #7c3aed;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 480px) {
+ 
+  .footer-content{
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,26 @@
+.vortex-app { display: flex; min-height: 100vh; }
+.vortex-main { flex: 1; display: flex; flex-direction: column; }
+.vortex-content { padding: 40px; }
+.section-title { margin-bottom: 25px; border-left: 4px solid #7c3aed; padding-left: 15px; }
+
+/* Grid Inteligente */
+.vortex-grid {
+  display: grid;
+  /* O minmax(240px, 1fr) já ajuda muito, mas vamos reforçar */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.skeleton-card { height: 280px; background: #1e293b; border-radius: 12px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+/* Estilo para telas menores que 768px */
+@media (max-width: 768px) {
+  .vortex-app {
+    flex-direction: column; /* Sidebar em cima, conteúdo embaixo */
+  }
+
+  .vortex-content {
+    padding: 20px; /* Reduz o respiro nas laterais */
+  }
+}
