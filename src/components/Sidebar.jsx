@@ -4,7 +4,7 @@ import { LayoutDashboard, Gamepad2, User } from 'lucide-react';
 export function Sidebar({ activeTab, setActiveTab }) {
   return (
     <aside className="vortex-sidebar">
-      <h2 className="logo">GAMER X</h2>
+      <h2 className="logo">VORTEX_</h2>
       <nav>
         {/* Aba Dashboard */}
         <div 
