@@ -6,48 +6,54 @@ import { GameModal } from "./components/GameModal";
 import { Profile } from "./components/Profile";
 import { Footer } from "./components/Footer";
 import { gamesData } from "./data/games";
+
+// --- 1. IMPORTAÇÕES DO TOASTIFY ---
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import "./App.css";
 
 function App() {
-  // --- ESTADOS DA APLICAÇÃO ---
   const [search, setSearch] = useState("");
   const [favorites, setFavorites] = useState([]);
-  const [activeTab, setActiveTab] = useState("all"); // Controle de navegação (Dashboard, Meus Jogos, Perfil)
+  const [activeTab, setActiveTab] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedGame, setSelectedGame] = useState(null); // Jogo selecionado para o Modal
+  const [selectedGame, setSelectedGame] = useState(null);
   const [user, setUser] = useState({
     name: "Ricardo_Dev",
     level: "01",
   });
 
-  // --- EFEITO DE CARREGAMENTO (SKELETON) ---
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 2000);
   }, []);
 
-  // --- LÓGICA DE FAVORITOS ---
-  const toggleFavorite = (id) => {
-    setFavorites((prev) =>
-      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id],
-    );
+  // --- 2. LÓGICA DE FAVORITOS (MELHORADA COM TOAST) ---
+  const toggleFavorite = (id, title) => {
+    setFavorites((prev) => {
+      const isFav = prev.includes(id);
+      if (isFav) {
+        toast.info(`${title} removido!`, { theme: "dark" });
+        return prev.filter((f) => f !== id);
+      } else {
+        toast.success(`${title} favoritado! 🚀`, { theme: "dark" });
+        return [...prev, id];
+      }
+    });
   };
 
-  // --- FILTRAGEM DINÂMICA (ABA ATIVA + BUSCA) ---
   const filteredGames = gamesData
     .filter((g) => activeTab === "all" || favorites.includes(g.id))
     .filter((g) => g.title.toLowerCase().includes(search.toLowerCase()));
 
   return (
     <div className="vortex-app">
-      {/* Sidebar controla a troca de abas */}
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <main className="vortex-main">
-        {/* Passamos o 'user' para o Header exibir o nome dinamicamente */}
         <Header search={search} setSearch={setSearch} user={user} />
 
         <div className="vortex-content">
-          {/* RENDERIZAÇÃO CONDICIONAL: Perfil vs Dashboard */}
           {activeTab === "profile" ? (
             <Profile user={user} setUser={setUser} />
           ) : (
@@ -66,7 +72,8 @@ function App() {
                         key={g.id}
                         {...g}
                         isFavorite={favorites.includes(g.id)}
-                        onFavorite={() => toggleFavorite(g.id)}
+                        // Passamos g.title para o toast saber o nome do jogo
+                        onFavorite={() => toggleFavorite(g.id, g.title)}
                         onPlay={() => setSelectedGame(g)}
                       />
                     ))}
@@ -77,8 +84,15 @@ function App() {
         <Footer />
       </main>
 
-      {/* Modal de detalhes do jogo */}
       <GameModal game={selectedGame} onClose={() => setSelectedGame(null)} />
+
+      {/* --- 3. O PALCO DOS ALERTAS (CONTAINER) --- */}
+      <ToastContainer 
+        position="bottom-right" 
+        autoClose={3000} 
+        theme="dark" 
+        pauseOnHover={false}
+      />
     </div>
   );
 }
