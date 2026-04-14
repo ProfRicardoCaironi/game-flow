@@ -8,8 +8,8 @@ import { Footer } from "./components/Footer";
 import { gamesData } from "./data/games";
 
 // --- 1. IMPORTAÇÕES DO TOASTIFY ---
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 
@@ -87,10 +87,10 @@ function App() {
       <GameModal game={selectedGame} onClose={() => setSelectedGame(null)} />
 
       {/* --- 3. O PALCO DOS ALERTAS (CONTAINER) --- */}
-      <ToastContainer 
-        position="bottom-right" 
-        autoClose={3000} 
-        theme="dark" 
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        theme="dark"
         pauseOnHover={false}
       />
     </div>
